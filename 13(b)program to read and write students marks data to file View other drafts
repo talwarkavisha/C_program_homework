@@ -1,0 +1,92 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Student {
+  char name[50];
+  int rollNo;
+  int marks[5]; // Assuming 5 subjects
+};
+
+// Function to read student data from a file
+int read_students_from_file(char *filename, struct Student students[], int max_students) {
+  FILE *fp = fopen(filename, "r");
+  if (!fp) {
+    printf("Error opening file %s!\n", filename);
+    return -1;
+  }
+
+  int num_students = 0;
+  while (fscanf(fp, "%s %d", students[num_students].name, &students[num_students].rollNo) == 2) {
+    for (int i = 0; i < 5; i++) {
+      fscanf(fp, "%d", &students[num_students].marks[i]);
+    }
+    num_students++;
+    if (num_students == max_students) {
+      printf("Warning: Reached maximum students (%d).\n", max_students);
+      break;
+    }
+  }
+
+  fclose(fp);
+  return num_students;
+}
+
+// Function to write student data to a file
+void write_students_to_file(char *filename, struct Student students[], int num_students) {
+  FILE *fp = fopen(filename, "w");
+  if (!fp) {
+    printf("Error opening file %s!\n", filename);
+    return;
+  }
+
+  for (int i = 0; i < num_students; i++) {
+    fprintf(fp, "%s %d", students[i].name, students[i].rollNo);
+    for (int j = 0; j < 5; j++) {
+      fprintf(fp, " %d", students[i].marks[j]);
+    }
+    fprintf(fp, "\n");
+  }
+
+  fclose(fp);
+}
+
+int main() {
+  char filename[50];
+  int max_students = 10; // Modify as needed
+
+  // Reading student data
+  printf("Enter file name to read (or leave empty for new file): ");
+  scanf("%s", filename);
+
+  struct Student students[max_students];
+  int num_students = read_students_from_file(filename, students, max_students);
+
+  // Displaying read data
+  if (num_students > 0) {
+    printf("\nStudents read from file:\n");
+    for (int i = 0; i < num_students; i++) {
+      printf("%s (%d): ", students[i].name, students[i].rollNo);
+      for (int j = 0; j < 5; j++) {
+        printf("%d ", students[i].marks[j]);
+      }
+      printf("\n");
+    }
+  } else {
+    printf("No students found in the file.\n");
+  }
+
+  // Writing student data (optional)
+  if (!filename[0]) {
+    printf("\nEnter file name to write: ");
+    scanf("%s", filename);
+  }
+
+  printf("\nAdding new students (if any):\n");
+  // Add data for new students, update existing if needed
+
+  write_students_to_file(filename, students, num_students); // Update num_students if adding new
+
+  printf("Student data written to file %s.\n", filename);
+
+  return 0;
+}
