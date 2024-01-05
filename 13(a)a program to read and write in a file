@@ -1,0 +1,41 @@
+#include <stdio.h>
+
+int main() {
+    char filename[50];
+    char content[100];
+
+    // Get the filename from the user
+    printf("Enter the filename: ");
+    scanf("%s", filename);
+
+    // --- Writing to the file ---
+    FILE *fp = fopen(filename, "w");  // Open the file in write mode
+    if (fp == NULL) {
+        printf("Error opening file!\n");
+        return 1;
+    }
+
+    printf("Enter some text to write to the file: ");
+    fgets(content, 100, stdin);  // Read input from the user
+
+    fputs(content, fp);  // Write the content to the file
+    fclose(fp);  // Close the file
+
+    printf("Content written to file successfully.\n");
+
+    // --- Reading from the file ---
+    fp = fopen(filename, "r");  // Open the file in read mode
+    if (fp == NULL) {
+        printf("Error opening file!\n");
+        return 1;
+    }
+
+    printf("\nContents of the file:\n");
+    while (fgets(content, 100, fp) != NULL) {
+        printf("%s", content);
+    }
+
+    fclose(fp);  // Close the file
+
+    return 0;
+}
