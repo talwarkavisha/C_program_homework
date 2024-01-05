@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    // malloc: Allocate memory for 5 integers
+    int *ptr1 = (int*)malloc(5 * sizeof(int));
+    if (ptr1 == NULL) {
+        printf("Memory allocation failed!\n");
+        exit(1);
+    }
+
+    // Assign values to the allocated memory
+    for (int i = 0; i < 5; i++) {
+        ptr1[i] = i * 10;
+    }
+
+    // Print the allocated array
+    printf("Values in ptr1 (malloc):\n");
+    for (int i = 0; i < 5; i++) {
+        printf("%d ", ptr1[i]);
+    }
+    printf("\n");
+
+    // calloc: Allocate memory for 3 doubles and initialize to 0
+    double *ptr2 = (double*)calloc(3, sizeof(double));
+    if (ptr2 == NULL) {
+        printf("Memory allocation failed!\n");
+        exit(1);
+    }
+
+    // Print the allocated array (initialized to 0)
+    printf("Values in ptr2 (calloc):\n");
+    for (int i = 0; i < 3; i++) {
+        printf("%.2lf ", ptr2[i]);
+    }
+    printf("\n");
+
+    // realloc: Resize the memory allocated for ptr1 to hold 10 integers
+    ptr1 = realloc(ptr1, 10 * sizeof(int));
+    if (ptr1 == NULL) {
+        printf("Memory reallocation failed!\n");
+        exit(1);
+    }
+
+    // Assign values to the newly allocated memory
+    for (int i = 5; i < 10; i++) {
+        ptr1[i] = i * 20;
+    }
+
+    // Print the reallocated array
+    printf("Values in ptr1 (after realloc):\n");
+    for (int i = 0; i < 10; i++) {
+        printf("%d ", ptr1[i]);
+    }
+    printf("\n");
+
+    // Free the allocated memory
+    free(ptr1);
+    free(ptr2);
+
+    printf("Memory freed successfully!\n");
+
+    return 0;
+}
