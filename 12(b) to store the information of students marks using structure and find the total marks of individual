@@ -1,0 +1,51 @@
+#include <stdio.h>
+
+union StudentData {
+  char name[50];
+  int rollNumber;
+  float averageMarks;
+};
+
+int main() {
+  int choice;
+  union StudentData student;
+
+  // Menu loop
+  while (1) {
+    printf("\n1. Enter student information (Name)\n");
+    printf("2. Enter student information (Roll Number)\n");
+    printf("3. Enter student information (Average Marks)\n");
+    printf("4. Display student information\n");
+    printf("5. Exit\n");
+
+    printf("\nEnter your choice: ");
+    scanf("%d", &choice);
+
+    switch (choice) {
+      case 1:
+        printf("Enter student name: ");
+        scanf("%s", student.name);
+        break;
+      case 2:
+        printf("Enter student roll number: ");
+        scanf("%d", &student.rollNumber);
+        break;
+      case 3:
+        printf("Enter student average marks: ");
+        scanf("%f", &student.averageMarks);
+        break;
+      case 4:
+        printf("Name: %s\n", student.name);
+        printf("Roll Number: %d\n", student.rollNumber);
+        printf("Average Marks: %.2f\n", student.averageMarks);
+        break;
+      case 5:
+        printf("Exiting...\n");
+        return 0;
+      default:
+        printf("Invalid choice. Please try again.\n");
+    }
+  }
+
+  return 0;
+}
