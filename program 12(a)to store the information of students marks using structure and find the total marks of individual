@@ -1,0 +1,54 @@
+#include <stdio.h>
+
+struct Student {
+    char name[50];
+    int roll_no;
+    int num_subjects;  // Added for flexibility
+    int marks[10];  // Assuming a maximum of 10 subjects
+    int total_marks;
+};
+
+int main() {
+    int num_students;
+
+    printf("Enter the number of students: ");
+    scanf("%d", &num_students);
+
+    struct Student students[num_students];
+
+    for (int i = 0; i < num_students; i++) {
+        printf("\nEnter information for student %d:\n", i + 1);
+
+        printf("Name: ");
+        scanf("%s", students[i].name);
+
+        printf("Roll Number: ");
+        scanf("%d", &students[i].roll_no);
+
+        printf("Enter the number of subjects (max 10): ");
+        scanf("%d", &students[i].num_subjects);
+
+        printf("Enter marks for %d subjects: ", students[i].num_subjects);
+        students[i].total_marks = 0;
+        for (int j = 0; j < students[i].num_subjects; j++) {
+            scanf("%d", &students[i].marks[j]);
+            students[i].total_marks += students[i].marks[j];
+        }
+    }
+
+    printf("\nStudent Information:\n");
+    printf("--------------------\n");
+    for (int i = 0; i < num_students; i++) {
+        printf("Name: %s\n", students[i].name);
+        printf("Roll Number: %d\n", students[i].roll_no);
+        printf("Marks: ");
+        for (int j = 0; j < students[i].num_subjects; j++) {
+            printf("%d ", students[i].marks[j]);
+        }
+        printf("\nTotal Marks: %d\n", students[i].total_marks);
+        printf("--------------------\n");
+    }
+
+    return 0;
+}
+
